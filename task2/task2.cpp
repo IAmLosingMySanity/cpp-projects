@@ -11,21 +11,21 @@ bool canPermute(string str1, string str2) {
         return false; // Если длины строк разные, невозможно переставить
     }
 
-    int count[26] = {0}; // Массив для подсчета количества букв (a-z)
+    int count[95] = {0}; // Массив для подсчета количества букв (a-z)
 
     // Подсчет букв в str1
     for (char c : str1) {
-        count[c - 'a']++;
+        count[c - '!']++;
     }
 
     // Вычитаем буквы str2 из массива
     for (char c : str2) {
-        count[c - 'a']--;
+        count[c - '!']--;
     }
 
     // Если все элементы массива count равны нулю, строки можно переставить
-    for (int i = 0; i < 26; i++) {
-        if (count[i] != 0) {
+    for (int i = 0; i < 95; i++) {
+        if (count[i] > 0) {
             return false;
         }
     }
