@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include <random>
+#include <ctime>
 
 int main() {
     std::ifstream inputFile("f1.txt");
@@ -21,8 +22,8 @@ int main() {
         words.push_back(word);
     }
 
-    std::random_device rd;
-    std::mt19937 rng(rd());
+    auto rng = std::default_random_engine{std::time(0)};
+
     std::shuffle(words.begin(), words.end(), rng);
 
     for (const std::string& w : words) {
