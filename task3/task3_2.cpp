@@ -34,6 +34,6 @@ int main() {
     outputFile.close();
 
     std::cout << "The words in file f1 were randomly reordered and written to file f2." << std::endl;
-
+    
     return 0;
 }
