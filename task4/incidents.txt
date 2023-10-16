@@ -1,0 +1,5 @@
+1; Date: 01.01.2023; Type car crash; Description: pangolier roll up into traffic light
+2 | Date: 02.01.2023; Type car crash; Description: same shit that happend yesterday
+2147483647 | Date: ; Type ; Description: 
+4546 | Date: 03.01.2023; Type ufo crash; Description: omg 
+123 | Date: 13.04.2197 | Type kjahk  | Description: asjdhiauheidj adaj hdqiu eh qed
