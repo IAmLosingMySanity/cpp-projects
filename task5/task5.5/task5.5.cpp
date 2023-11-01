@@ -21,19 +21,14 @@ public:
     virtual void addPassenger(int passengerId) = 0;
     virtual void removePassenger(int passengerId) = 0;
     virtual void printPassengerList() = 0;
-    virtual std::string getName() const = 0;
     virtual ~PassengerCarrier() {}
 };
 
 class Airplane : public PassengerCarrier {
 private:
     std::vector<int> passengerList;
-    std::string name;
 
 public:
-    Airplane(std::string a_name) {
-        name = a_name;
-    }
     void addPassenger(int passengerId) override {
         passengerList.push_back(passengerId);
     }
@@ -53,21 +48,13 @@ public:
             std::cout << passengerId << std::endl;
         }
     }
-
-    std::string getName() const override {
-        return name;
-    }
 };
 
 class Train : public PassengerCarrier {
 private:
     std::vector<int> passengerList;
-    std::string name;
 
 public:
-    Train(std::string t_name) {
-        name = t_name;
-    }
     void addPassenger(int passengerId) override {
         passengerList.push_back(passengerId);
     }
@@ -87,21 +74,13 @@ public:
             std::cout << passengerId << std::endl;
         }
     }
-
-    std::string getName() const override {
-        return name;
-    }
 };
 
 class Car : public PassengerCarrier {
 private:
     std::vector<int> passengerList;
-    std::string name;
 
 public:
-    Car(std::string c_name) {
-        name = c_name;
-    }
     void addPassenger(int passengerId) override {
         passengerList.push_back(passengerId);
     }
@@ -121,30 +100,26 @@ public:
             std::cout << passengerId << std::endl;
         }
     }
-
-    std::string getName() const override {
-        return name;
-    }
 };
 
 void Person::drive(const PassengerCarrier& carrier) {
-    std::cout << name << " is driving a " <<  carrier.getName() << "." << std::endl;
+    std::cout << name << " is driving a " <<  typeid(carrier).name() << "." << std::endl;
 }
 
 int main() {
-    PassengerCarrier* airplane = new Airplane("FlexAir");
+    PassengerCarrier* airplane = new Airplane();
     airplane->addPassenger(1);
     airplane->addPassenger(2);
     airplane->printPassengerList();
     
 
-    PassengerCarrier* train = new Train("Sapsan");
+    PassengerCarrier* train = new Train();
     train->addPassenger(3);
     train->addPassenger(4);
     train->printPassengerList();
     
 
-    PassengerCarrier* car = new Car("Lada");
+    PassengerCarrier* car = new Car();
     car->addPassenger(5);
     car->addPassenger(6);
     car->printPassengerList();
