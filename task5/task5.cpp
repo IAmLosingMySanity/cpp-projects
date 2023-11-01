@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 
+class PassengerCarrier;
+
 class Person {
     public:
     Person(std::string p_name)
