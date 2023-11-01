@@ -2,6 +2,7 @@
 #include <vector>
 
 class PassengerCarrier {
+    friend void Person::drive(const PassengerCarrier&);
 public:
     virtual void addPassenger(int passengerId) = 0;
     virtual void removePassenger(int passengerId) = 0;
@@ -86,6 +87,22 @@ public:
         }
     }
 };
+
+class Person {
+    public:
+    Person(std::string p_name)
+    {
+        name = p_name;
+    }
+    void drive(const PassengerCarrier&);
+ 
+private:
+    std::string name;
+};
+
+void Person::drive(const PassengerCarrier& carrier) {
+    std::cout << name << " is driving a " << typeid(carrier).name() << "." << std::endl;
+}
 
 int main() {
     PassengerCarrier* airplane = new Airplane();
