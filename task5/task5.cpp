@@ -123,5 +123,10 @@ int main() {
     car->printPassengerList();
     delete car;
 
+    Person person("Ryan Gosling"); 
+    person.drive(*airplane);
+    person.drive(*train);
+    person.drive(*car);
+
     return 0;
 }
