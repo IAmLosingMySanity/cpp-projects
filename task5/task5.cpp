@@ -1,6 +1,18 @@
 #include <iostream>
 #include <vector>
 
+class Person {
+    public:
+    Person(std::string p_name)
+    {
+        name = p_name;
+    }
+    void drive(const PassengerCarrier&);
+ 
+private:
+    std::string name;
+};
+
 class PassengerCarrier {
     friend void Person::drive(const PassengerCarrier&);
 public:
@@ -86,18 +98,6 @@ public:
             std::cout << passengerId << std::endl;
         }
     }
-};
-
-class Person {
-    public:
-    Person(std::string p_name)
-    {
-        name = p_name;
-    }
-    void drive(const PassengerCarrier&);
- 
-private:
-    std::string name;
 };
 
 void Person::drive(const PassengerCarrier& carrier) {
