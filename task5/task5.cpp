@@ -144,7 +144,7 @@ int main() {
     train->printPassengerList();
     
 
-    PassengerCarrier* car = new Car("Lada");
+    PassengerCarrier* car = new Car("Aurus");
     car->addPassenger(5);
     car->addPassenger(6);
     car->printPassengerList();
