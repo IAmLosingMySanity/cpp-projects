@@ -106,6 +106,27 @@ void Person::drive(const PassengerCarrier& carrier) {
     std::cout << name << " is driving a " <<  typeid(carrier).name() << "." << std::endl;
 }
 
+// class Animal {
+// private:
+//     std::string name;
+
+// public:
+//     Animal(std::string an_name) {
+//         name = an_name;
+//     }
+//     void trydrive(const PassengerCarrier& carrier) {
+//         try
+//         {
+//             std::cout << name << " is driving a " <<  typeid(carrier).name() << "." << std::endl;
+//         }
+//         catch(const std::exception& e)
+//         {
+//             std::cerr << e.what() << '\n';
+//         }
+        
+//     }
+// };
+
 int main() {
     PassengerCarrier* airplane = new Airplane();
     airplane->addPassenger(1);
@@ -133,6 +154,9 @@ int main() {
     delete airplane;
     delete train;
     delete car;
+
+    // Animal animal = Animal("Dog");
+    // animal.trydrive(*airplane);
 
     return 0;
 }
