@@ -1,9 +1,9 @@
 #include <iostream>
-#include <set>
+#include <vector>
 
 class Set {
 private:
-    std::set<int> elements;
+    std::vector<int> elements;
 
 public:
     Set() {}
@@ -11,18 +11,31 @@ public:
     ~Set() {}
 
     void addElement(int element) {
-        elements.insert(element);
+        elements.push_back(element);
     }
 
     void removeElement(int element) {
-        elements.erase(element);
+        for (auto it = elements.begin(); it != elements.end(); ++it) {
+            if (*it == element) {
+                elements.erase(it);
+                break;
+            }
+        }
     }
 
-    std::set<int> intersection(const Set& otherSet) {
-        std::set<int> result;
+    void insertBetween(int x, int element1, int element2) {
+        auto it1 = std::find(elements.begin(), elements.end(), element1);
+        auto it2 = std::find(elements.begin(), elements.end(), element2);
+        if (it1 != elements.end() && it2 != elements.end()) {
+            elements.insert(it2, x);
+        }
+    }
+
+    std::vector<int> intersection(const Set& otherSet) {
+        std::vector<int> result;
         for (int element : elements) {
-            if (otherSet.elements.count(element) > 0) {
-                result.insert(element);
+            if (std::find(otherSet.elements.begin(), otherSet.elements.end(), element) != otherSet.elements.end()) {
+                result.push_back(element);
             }
         }
         return result;
@@ -31,18 +44,20 @@ public:
     Set operator-(const Set& otherSet) {
         Set result;
         for (int element : elements) {
-            if (otherSet.elements.count(element) == 0) {
+            if (std::find(otherSet.elements.begin(), otherSet.elements.end(), element) == otherSet.elements.end()) {
                 result.addElement(element);
             }
         }
         return result;
     }
-
-    friend void printSet(const Set& set);
+    
+    std::vector<int> getElements() const {
+        return elements;
+    }
 };
 
-void printSet(const Set& set) {
-    for (int element : set.elements) {
+void printVector(const std::vector<int>& vec) {
+    for (int element : vec) {
         std::cout << element << " ";
     }
     std::cout << std::endl;
@@ -60,21 +75,18 @@ int main() {
     set2.addElement(4);
 
     std::cout << "Set 1: ";
-    printSet(set1);
+    printVector(set1.getElements());
 
     std::cout << "Set 2: ";
-    printSet(set2);
+    printVector(set2.getElements());
 
     std::cout << "Intersection: ";
-    std::set<int> intersection = set1.intersection(set2);
-    for (int element : intersection) {
-        std::cout << element << " ";
-    }
-    std::cout << std::endl;
+    std::vector<int> intersection = set1.intersection(set2);
+    printVector(intersection);
 
     std::cout << "Difference: ";
     Set difference = set1 - set2;
-    printSet(difference);
+    printVector(difference.getElements());
 
     return 0;
 }
