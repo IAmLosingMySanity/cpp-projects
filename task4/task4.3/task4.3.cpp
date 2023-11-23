@@ -22,7 +22,7 @@ void cls() {
 void addIncidentToFile(const Incident& incident, const std::string& filename) {
     std::ofstream file(filename, std::ios::app);
     if (file.is_open()) {
-        file << incident.id << "," << incident.date << "," << incident.type << "," << incident.description << "\n";
+        file << incident.id << " | " << incident.date << " | " << incident.type << " | " << incident.description << "\n";
         file.close();
         std::cout << "Incident added to file successfully." << std::endl;
     } else {
@@ -31,6 +31,37 @@ void addIncidentToFile(const Incident& incident, const std::string& filename) {
 }
 
 // Функция для удаления инцидента из файла по его идентификатору
+// void deleteIncidentFromFile(int id, const std::string& filename) {
+//     std::ifstream inputFile(filename);
+//     if (!inputFile.is_open()) {
+//         std::cerr << "Unable to open file for reading." << std::endl;
+//         return;
+//     }
+
+//     std::vector<std::string> lines;
+//     std::string line;
+//     while (std::getline(inputFile, line)) {
+//         size_t pos = line.find("|");
+//         int currentId = std::stoi(line.substr(0, pos));
+//         if (currentId != id) {
+//             lines.push_back(line);
+//         }
+//     }
+
+//     inputFile.close();
+
+//     std::ofstream outputFile(filename, std::ios::trunc);
+//     if (outputFile.is_open()) {
+//         for (const auto& l : lines) {
+//             outputFile << l << "\n";
+//         }
+//         outputFile.close();
+//         std::cout << "Incident with id " << id << " deleted successfully." << std::endl;
+//     } else {
+//         std::cerr << "Unable to open file for writing." << std::endl;
+//     }
+// }
+
 void deleteIncidentFromFile(int id, const std::string& filename) {
     std::ifstream inputFile(filename);
     if (!inputFile.is_open()) {
@@ -38,21 +69,44 @@ void deleteIncidentFromFile(int id, const std::string& filename) {
         return;
     }
 
-    std::vector<std::string> lines;
+    std::vector<std::string> matchingLines;
     std::string line;
     while (std::getline(inputFile, line)) {
-        size_t pos = line.find(",");
+        size_t pos = line.find("|");
         int currentId = std::stoi(line.substr(0, pos));
-        if (currentId != id) {
-            lines.push_back(line);
+        if (currentId == id) {
+            matchingLines.push_back(line);
         }
     }
 
     inputFile.close();
 
+    if (matchingLines.empty()) {
+        std::cout << "No incidents found with id " << id << std::endl;
+        return;
+    }
+
+    if (matchingLines.size() > 1) {
+        std::cout << "Multiple incidents found with id " << id << ". Please select one:" << std::endl;
+        for (int i = 0; i < matchingLines.size(); ++i) {
+            std::cout << i+1 << ". " << matchingLines[i] << std::endl;
+        }
+
+        int selection;
+        std::cout << "Enter the number of the incident to delete: ";
+        std::cin >> selection;
+
+        if (selection < 1 || selection > matchingLines.size()) {
+            std::cout << "Invalid selection. No incident deleted." << std::endl;
+            return;
+        }
+
+        matchingLines.erase(matchingLines.begin() + selection - 1);
+    }
+
     std::ofstream outputFile(filename, std::ios::trunc);
     if (outputFile.is_open()) {
-        for (const auto& l : lines) {
+        for (const auto& l : matchingLines) {
             outputFile << l << "\n";
         }
         outputFile.close();

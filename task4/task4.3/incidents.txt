@@ -1,20 +1,3 @@
-1,01.01.23,car crash,not cool
-2,02.01.23,car crash,not cool
-4,04.01.23,car crash,not cool
-5,05.01.23,car crash,not cool
-6,06.01.23,car crash,not cool
-7,07.01.23,car crash,not cool
-8,08.01.23,car crash,not cool
-9,09.01.23,car crash,not cool
-10,10.01.23,car crash,not cool
-11,11.01.23,car crash,not cool
-12,12.01.23,car crash,not cool
-14,14.01.23,car crash,not cool
-15,15.01.23,car crash,not cool
-16,16.01.23,car crash,not cool
-17,17.01.23,car crash,not cool
-18,18.01.23,car crash,not cool
-19,19.01.23,car crash,not cool
-20,20.01.23,car crash,not cool
-21,21.01.23,event,no crashes
-13,13.01.23,car crush,not cool
+1 | 01.01.23 | car crash | not cool
+1 | 01.02.23 | car crash | no cool
+123 | 01.02.23 | car crash | not cool x3
