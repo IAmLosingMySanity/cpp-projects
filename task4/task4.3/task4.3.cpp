@@ -18,7 +18,6 @@ void cls() {
     #endif
 }
 
-// Функция для добавления инцидента в файл
 void addIncidentToFile(const Incident& incident, const std::string& filename) {
     std::ofstream file(filename, std::ios::app);
     if (file.is_open()) {
@@ -30,7 +29,6 @@ void addIncidentToFile(const Incident& incident, const std::string& filename) {
     }
 }
 
-// Функция для удаления инцидента из файла по его идентификатору
 // void deleteIncidentFromFile(int id, const std::string& filename) {
 //     std::ifstream inputFile(filename);
 //     if (!inputFile.is_open()) {
@@ -116,7 +114,6 @@ void deleteIncidentFromFile(int id, const std::string& filename) {
     }
 }
 
-// Функция для чтения всех инцидентов из файла
 void readFromFile(const std::string& filename) {
     std::ifstream file(filename);
     if (file.is_open()) {
@@ -130,7 +127,6 @@ void readFromFile(const std::string& filename) {
     }
 }
 
-// Функция для поиска инцидента по дате
 void searchByDate(const std::string& date, const std::string& filename) {
     std::ifstream file(filename);
     if (file.is_open()) {
