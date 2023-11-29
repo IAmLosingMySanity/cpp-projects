@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <sstream>
 
 struct Incident {
     int id;
@@ -72,35 +73,12 @@ void deleteIncidentFromFile(int id, const std::string& filename) {
     while (std::getline(inputFile, line)) {
         size_t pos = line.find("|");
         int currentId = std::stoi(line.substr(0, pos));
-        if (currentId == id) {
+        if (currentId != id) {
             matchingLines.push_back(line);
         }
     }
 
     inputFile.close();
-
-    if (matchingLines.empty()) {
-        std::cout << "No incidents found with id " << id << std::endl;
-        return;
-    }
-
-    if (matchingLines.size() > 1) {
-        std::cout << "Multiple incidents found with id " << id << ". Please select one:" << std::endl;
-        for (int i = 0; i < matchingLines.size(); ++i) {
-            std::cout << i+1 << ". " << matchingLines[i] << std::endl;
-        }
-
-        int selection;
-        std::cout << "Enter the number of the incident to delete: ";
-        std::cin >> selection;
-
-        if (selection < 1 || selection > matchingLines.size()) {
-            std::cout << "Invalid selection. No incident deleted." << std::endl;
-            return;
-        }
-
-        matchingLines.erase(matchingLines.begin() + selection - 1);
-    }
 
     std::ofstream outputFile(filename, std::ios::trunc);
     if (outputFile.is_open()) {
@@ -127,17 +105,45 @@ void readFromFile(const std::string& filename) {
     }
 }
 
+// void searchByDate(const std::string& date, const std::string& filename) {
+//     std::ifstream file(filename);
+//     if (file.is_open()) {
+//         std::string line;
+//         bool found = false;
+//         while (std::getline(file, line)) {
+//             size_t pos = line.find("|");
+//             std::string currentDate = line.substr(pos + 1, line.find("|", pos + 1) - pos - 1);
+//             if (currentDate == date) {
+//                 std::cout << line << std::endl;
+//                 found = true;
+//             }
+//         }
+//         file.close();
+
+//         if (!found) {
+//             std::cout << "No incidents found for the specified date." << std::endl;
+//         }
+//     } else {
+//         std::cerr << "Unable to open file for reading." << std::endl;
+//     }
+// }
+
 void searchByDate(const std::string& date, const std::string& filename) {
     std::ifstream file(filename);
     if (file.is_open()) {
         std::string line;
         bool found = false;
         while (std::getline(file, line)) {
-            size_t pos = line.find(",");
-            std::string currentDate = line.substr(pos + 1, line.find(",", pos + 1) - pos - 1);
-            if (currentDate == date) {
-                std::cout << line << std::endl;
-                found = true;
+            std::istringstream iss(line);
+            std::string token;
+            int count = 0;
+            while (std::getline(iss, token, '|')) {
+                count++;
+                if (count == 2 && token == " " + date + " ") {
+                    std::cout << line << std::endl;
+                    found = true;
+                    break;
+                }
             }
         }
         file.close();
