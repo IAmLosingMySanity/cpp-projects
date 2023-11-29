@@ -3,11 +3,11 @@
 template <typename T>
 class Queue {
 private:
-    T* data; // Массив для хранения элементов очереди
-    int front; // Индекс начала очереди
-    int rear; // Индекс конца очереди
-    int capacity; // Вместимость очереди
-    int size; // Текущий размер очереди
+    T* data;
+    int front;
+    int rear;
+    int capacity;
+    int size;
 
 public:
     Queue(int capacity) {
@@ -24,7 +24,7 @@ public:
 
     void enqueue(T element) {
         if (size >= capacity) {
-            std::cout << "Очередь полна. Невозможно добавить элемент." << std::endl;
+            std::cout << "Queue is full. Element cannot be added." << std::endl;
             return;
         }
 
@@ -35,7 +35,7 @@ public:
 
     T dequeue() {
         if (size <= 0) {
-            std::cout << "Очередь пуста. Невозможно удалить элемент." << std::endl;
+            std::cout << "Queue is empty. Element cannot be removed." << std::endl;
             return T();
         }
 
