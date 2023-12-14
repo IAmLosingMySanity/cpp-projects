@@ -128,4 +128,8 @@ int main() {
     Set<std::string> intersectionStringSet = stringSet.intersection(otherStringSet);
     std::cout << "Intersection: ";
     printSet(intersectionStringSet);
+
+    Set<std::string> differenceSet1 = stringSet - otherStringSet;
+    std::cout << "Difference: ";
+    printSet(differenceSet1);
 }
