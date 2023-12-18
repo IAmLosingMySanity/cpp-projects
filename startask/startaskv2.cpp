@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <string.h>
 
 const uint64_t key = 0x0123456789ABCDEF;
 
@@ -54,6 +55,19 @@ void Decrypt(uint64_t& block, uint64_t key, int numRounds) {
     block = (static_cast<uint64_t>(L) << 32) | R;
 }
 
+void PadBlock(uint64_t& block, std::streamsize bytesRead) {
+    if (bytesRead < sizeof(block)) {
+        uint64_t padding = 0;
+        memcpy(reinterpret_cast<char*>(&block) + bytesRead, &padding, sizeof(block) - bytesRead);
+    }
+}
+
+void UnpadBlock(uint64_t& block, std::streamsize& bytesRead) {
+    while (bytesRead > 0 && reinterpret_cast<char*>(&block)[bytesRead - 1] == '\0') {
+        --bytesRead;
+    }
+}
+
 int main(int argc, char* argv[]) {
 
     if (argc < 2)
@@ -62,11 +76,13 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    std::string action = argv[1];
+    std::string file = argv[1];
+
+    std::string action = argv[2];
 
     if (action == "e") {
         
-        std::ifstream inputFile("input.txt", std::ios::binary);
+        std::ifstream inputFile(file, std::ios::binary);
         std::ofstream outputFile("output.txt", std::ios::binary);
 
         if (!inputFile.is_open() || !outputFile.is_open()) {
@@ -75,7 +91,9 @@ int main(int argc, char* argv[]) {
         }
 
         uint64_t block;
-        while (inputFile.read(reinterpret_cast<char*>(&block), sizeof(block))) {
+        std::streamsize bytesRead;
+        while ((bytesRead = inputFile.read(reinterpret_cast<char*>(&block), sizeof(block)).gcount()) > 0) {
+            PadBlock(block, bytesRead);
             Encrypt(block, key, 8);
             outputFile.write(reinterpret_cast<const char*>(&block), sizeof(block));
         }
@@ -99,9 +117,11 @@ int main(int argc, char* argv[]) {
         }
 
         uint64_t block;
-        while (inputFile.read(reinterpret_cast<char*>(&block), sizeof(block))) {
+        std::streamsize bytesRead;
+        while ((bytesRead = inputFile.read(reinterpret_cast<char*>(&block), sizeof(block)).gcount()) > 0) {
             Decrypt(block, key, 8);
-            outputFile.write(reinterpret_cast<const char*>(&block), sizeof(block));
+            UnpadBlock(block, bytesRead);
+            outputFile.write(reinterpret_cast<const char*>(&block), bytesRead);
         }
 
         inputFile.close();
