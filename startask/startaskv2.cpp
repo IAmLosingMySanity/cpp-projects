@@ -76,9 +76,9 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    std::string file = argv[1];
+    std::string action = argv[1];
 
-    std::string action = argv[2];
+    std::string file = argv[2];
 
     if (action == "e") {
         
@@ -108,7 +108,7 @@ int main(int argc, char* argv[]) {
 
     else if (action == "d")
     {
-        std::ifstream inputFile("output.txt", std::ios::binary);
+        std::ifstream inputFile(file, std::ios::binary);
         std::ofstream outputFile("decoded.txt", std::ios::binary);
 
         if (!inputFile.is_open() || !outputFile.is_open()) {
