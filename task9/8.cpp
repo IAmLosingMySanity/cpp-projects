@@ -9,7 +9,6 @@ int main() {
     q.push(3);
     q.push(5);
     
-    // Lambda expression to check for duplicate elements in the queue
     auto containsDuplicateElements = [](std::queue<int>& q) {
         std::unordered_set<int> elements;
         

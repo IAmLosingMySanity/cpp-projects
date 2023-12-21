@@ -25,7 +25,6 @@ int main()
     std::cout << an << std::endl;
   }
   
-  // Print the sum with a fixed number of decimal places
   std::cout << std::fixed << sum << " ";
   
   return 0;
